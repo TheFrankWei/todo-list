@@ -5,9 +5,26 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+button {
+  cursor: pointer;
+  font-size: 0.8em;
+  min-height: 1em;
+}
+
+input {
+  font-size: 1em;
+
+}
+
+:root{
+  font-size: 30px;
+}
+
