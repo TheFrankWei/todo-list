@@ -34,6 +34,7 @@ const Error= styled.div`
     font-size: 0.8rem;
     margin-bottom: 1.5rem;
     min-height: 1rem;
+    text-align: center;
 `
 
 const InputContainer = styled.div`
