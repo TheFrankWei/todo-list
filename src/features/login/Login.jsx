@@ -33,6 +33,7 @@ const Error= styled.div`
     color: #B22222;
     font-size: 0.8rem;
     margin-bottom: 1.5rem;
+    min-height: 1rem;
 `
 
 const InputContainer = styled.div`
@@ -87,7 +88,7 @@ const LoginButton = styled.button`
     display: inline-block;
     width: 100%;
 
-    &:hover {
+    &:hover:not(:disabled) {
       color: #191970;
       border-color: currentColor;
       background-color: white;
@@ -100,7 +101,8 @@ const LoginButton = styled.button`
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
- 
+  
+  const isPending = useSelector((state) => state.user.status);
   const isAuthenticated = useSelector((state) => state.user.auth);
   const [username, setUsername] = useState('');
   const [usernameValidity, setUsernameValidity] = useState();
@@ -148,16 +150,17 @@ const Login = () => {
             <StyledUser/>
             <StyledInput type='email' placeholder='user@rapptrlabs.com' value={username} onChange={e => setUsername(e.target.value)} onBlur={(e)=>checkValidity('username')}required pattern=".{1,50}" />
         </InputContainer>
-        {usernameValidity === false  && <Error>Not a valid email</Error>}
+
+          <Error>{usernameValidity === false? 'Not a valid email' : null}</Error>
 
         <Label>Password</Label>
         <InputContainer>
         <StyledLock/>
         <StyledInput placeholder='Must be at least 4 characters' value={password} onChange={e => setPassword(e.target.value)} onBlur={(e)=>checkValidity('password')} required pattern=".{4,16}"  title="Password must be 4-16 characters."/>
         </InputContainer>
-        {passwordValidity === false && <Error>Not a valid password</Error>}
+        <Error>{passwordValidity === false? 'Not a valid password' : null}</Error>
 
-        <LoginButton type="submit">login</LoginButton>
+        <LoginButton type="submit" disabled={(!passwordValidity && !usernameValidity) || isPending === 'loading'}>{isPending==='loading'? '...' : 'login'}</LoginButton>
         </form>
     </LoginContainer>
   )
