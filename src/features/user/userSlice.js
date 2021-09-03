@@ -4,11 +4,13 @@ const initialState = {
         user: [],
         auth: false,
         status: 'idle',
+        httpErr: null,
     };
 
 export const fetchAsync = createAsyncThunk(
     'counter/fetchUser',
-    async (payload) => {
+    async (payload, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
+        try{
         // const response = await fetchUser(payload);
         // The value we return becomes the `fulfilled` action payload
         const URL = `http://dev.rapptrlabs.com/Tests/scripts/user-login.php`;
@@ -25,8 +27,15 @@ export const fetchAsync = createAsyncThunk(
             }),
             mode: 'cors',
         })
-        return response.json();
-
+        if (!response.ok) {
+            return rejectWithValue(response.status)
+        }
+        const data= await response.json();
+        return fulfillWithValue(data)
+    }
+    catch(err){
+        throw rejectWithValue(err.message);
+        }
     }
     );
 
@@ -58,6 +67,7 @@ export const userSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(fetchAsync.fulfilled, (state, {payload}) => {
+        console.log(payload)
         state.status = 'idle';
         const isAuth = payload.hasOwnProperty('user_token');
         if(isAuth){
@@ -65,7 +75,12 @@ export const userSlice = createSlice({
         }
         state.auth = isAuth;
         state.user = payload;
-      });
+      })
+      .addCase(fetchAsync.rejected, (state, {payload}) => {
+        state.status = 'idle';
+        state.httpErr = payload;
+      })
+      
   },
 });
 

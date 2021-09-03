@@ -104,6 +104,7 @@ const Login = () => {
   
   const isPending = useSelector((state) => state.user.status);
   const isAuthenticated = useSelector((state) => state.user.auth);
+  const httpErr = useSelector((state) => state.user.httpErr);
   const [username, setUsername] = useState('');
   const [usernameValidity, setUsernameValidity] = useState();
   const [password, setPassword] = useState('');
@@ -161,6 +162,7 @@ const Login = () => {
         <Error>{passwordValidity === false? 'Not a valid password' : null}</Error>
 
         <LoginButton type="submit" disabled={(!passwordValidity && !usernameValidity) || isPending === 'loading'}>{isPending==='loading'? '...' : 'login'}</LoginButton>
+        <Error>{httpErr? 'Invalid credentials' : null}</Error>
         </form>
     </LoginContainer>
   )
