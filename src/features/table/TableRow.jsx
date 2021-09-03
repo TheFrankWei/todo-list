@@ -100,7 +100,7 @@ const TableRow = (props) => {
     }
 
     return(
-        <StyledRow onDragStart={props.onDragStart} onDragEnter={props.onDragEnter} draggable>
+        <StyledRow onDragStart={props.onDragStart} onDragEnter={props.onDragEnter} draggable={props.draggable}>
             <Circle/>
             <form>
                 {toggleEdit?(
@@ -112,6 +112,7 @@ const TableRow = (props) => {
                             value={taskInput}
                             onChange={e => setTask(e.target.value)}
                             disabled={props.isDisabled}
+                            autocomplete="off"
                             />
                     </StyledTask>
                 ):(

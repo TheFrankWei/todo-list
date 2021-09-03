@@ -178,7 +178,7 @@ const Table = () => {
                         onDragStart={(e)=>handleDragStart(e,index)}
                         onDragEnter={(e)=>handleDragEnter(e,index)} 
                         onDragOver={(e)=>e.preventDefault()}
-                        draggable 
+                        draggable={taskList[0] && taskList[0].task !== ''}
                         key={item.id} 
                         item={item}/>
                 )) : null)   
