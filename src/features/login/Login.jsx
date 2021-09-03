@@ -29,8 +29,10 @@ const Label = styled.label`
 `;
 
 const Error= styled.div`
-    display: none;
+    display: block;
     color: #B22222;
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
 `
 
 const InputContainer = styled.div`
@@ -38,7 +40,7 @@ const InputContainer = styled.div`
     display: flex;
     width:100%;
     box-sizing: border-box;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
     border-radius: 0.4em;  
     overflow: hidden;
     &:hover {
@@ -50,7 +52,7 @@ const InputContainer = styled.div`
     input:not(:focus):not(:placeholder-shown):invalid {
       border: 2px dashed #B22222;
       ${Error} {
-        display: block;
+        display: block !important;
       }
     }
     input:not(:focus):not(:placeholder-shown):valid {
@@ -101,7 +103,9 @@ const Login = () => {
  
   const isAuthenticated = useSelector((state) => state.user.auth);
   const [username, setUsername] = useState('');
+  const [usernameValidity, setUsernameValidity] = useState();
   const [password, setPassword] = useState('');
+  const [passwordValidity, setPasswordValidity] = useState();
   
   useEffect(()=>{
     let isAuth = localStorage.getItem('isAuth');
@@ -119,6 +123,20 @@ const Login = () => {
         });
   }
 
+  const checkValidity = (type) => {
+    switch(type){
+      case 'username':
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        username && !re.test(String(username).toLowerCase())? setUsernameValidity(false): setUsernameValidity(true);
+        break;
+      case 'password':
+        (password && (password.length<4 || password.length>16))? setPasswordValidity(false): setPasswordValidity(true);
+        break;
+      default:
+        break;
+    }
+  }
+
   return(
     <LoginContainer>
         
@@ -128,16 +146,16 @@ const Login = () => {
       <Label>Email</Label>
         <InputContainer>
             <StyledUser/>
-            <StyledInput type='email' placeholder='user@rapptrlabs.com' value={username} onChange={e => setUsername(e.target.value)} required pattern=".{1,50}" />
+            <StyledInput type='email' placeholder='user@rapptrlabs.com' value={username} onChange={e => setUsername(e.target.value)} onBlur={(e)=>checkValidity('username')}required pattern=".{1,50}" />
         </InputContainer>
-        {username.length > 0 && <Error>Not a valid email</Error>}
+        {usernameValidity === false  && <Error>Not a valid email</Error>}
 
         <Label>Password</Label>
         <InputContainer>
         <StyledLock/>
-        <StyledInput placeholder='Must be at least 4 characters' value={password} onChange={e => setPassword(e.target.value)} required pattern=".{4,16}"  title="Password must be 4-16 characters."/>
+        <StyledInput placeholder='Must be at least 4 characters' value={password} onChange={e => setPassword(e.target.value)} onBlur={(e)=>checkValidity('password')} required pattern=".{4,16}"  title="Password must be 4-16 characters."/>
         </InputContainer>
-        {password.length > 0 && <Error>Not a valid password</Error>}
+        {passwordValidity === false && <Error>Not a valid password</Error>}
 
         <LoginButton type="submit">login</LoginButton>
         </form>
