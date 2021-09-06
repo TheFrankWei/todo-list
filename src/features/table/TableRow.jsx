@@ -29,7 +29,9 @@ const StyledSave = styled.button`
     background-color: black;
     color: white;
     &:hover {
-        background-color: #2E8B57;
+        color: #2E8B57;
+        border-color: currentColor;
+        background-color: transparent;
     }
     :disabled{
         opacity: 0.5;

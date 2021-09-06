@@ -69,6 +69,12 @@ const StyledNew = styled.button`
 
     border: solid 2px transparent;
     border-radius: 0.4em; 
+
+    &:hover {
+        color: #191970;
+        border-color: currentColor;
+        background-color: white;
+      }
 `
 
 const TableRowContainer = styled.div`

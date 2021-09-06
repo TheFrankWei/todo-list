@@ -160,10 +160,10 @@ const Login = () => {
         <StyledLock/>
         <StyledInput placeholder='Must be at least 4 characters' value={password} onChange={e => setPassword(e.target.value)} onBlur={(e)=>checkValidity('password')} required pattern=".{4,16}"  title="Password must be 4-16 characters."/>
         </InputContainer>
-        <Error>{passwordValidity === false? 'Not a valid password' : null}</Error>
+        <Error>{passwordValidity === false? 'Password must be 4-16 characters' : null}</Error>
 
         <LoginButton type="submit" disabled={(!passwordValidity && !usernameValidity) || isPending === 'loading'}>{isPending==='loading'? '...' : 'login'}</LoginButton>
-        <Error>{httpErr? 'Invalid credentials' : null}</Error>
+        <Error>{httpErr? `Error ${httpErr}` : null}</Error>
         </form>
     </LoginContainer>
   )
