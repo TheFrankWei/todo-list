@@ -8,6 +8,8 @@ import {
 import './App.css';
 import { keyframes } from "@emotion/react"
 
+import StyledButton from './features/button/button';
+
 const Bounce = keyframes`
     from {
         transform: translateY(0px);
@@ -23,26 +25,15 @@ const AppContainer = styled.div`
 
 const Title = styled.h1`
   padding: 1rem 0rem 0.2rem 0rem;
-  font-size: 3rem;  
+  font-size: 2rem;  
   animation: ${Bounce} 4s linear infinite alternate}    
 `;
 
-const StyledLogout = styled.button`
-  position: absolute;
+const StyledLogout = styled.div`
+  position: fixed;
   right: 0px;
   top 0px;
-  margin: 0.5rem .5rem .5rem .5rem;
-  
-  background-color: #778899;
-  color: white;
-  border: solid 2px transparent;
-  border-radius: 0.4em; 
-
-  &:hover {
-    color: #778899;
-    border-color: currentColor;
-    background-color: white;
-  }
+  margin: 0.5rem 0.5rem 0.5rem 0.5rem;
 `;
 
 const App = () => {
@@ -56,8 +47,8 @@ const App = () => {
   return(
     <AppContainer>
 
-      <StyledLogout onClick={handleLogout}>
-        Logout
+      <StyledLogout>
+        <StyledButton color="#778899" onClick={handleLogout}>Logout</StyledButton>
       </StyledLogout>
 
       <div>

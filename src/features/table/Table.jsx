@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import TableRow from './TableRow';
 import { Search } from '@emotion-icons/bootstrap/Search';
-import {NewMessage} from '@emotion-icons/entypo/NewMessage';
 import {
     getTaskList,
     createTask,
@@ -11,9 +10,11 @@ import {
   } from './tableSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
+import StyledButton from '../button/button';
+
 const StyledTable = styled.div`
     box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
-    min-width: 20rem;
+    min-width: 32rem;
     min-height: 9.1rem;
     display: flex;
     flex-direction: column;
@@ -39,7 +40,7 @@ const SearchBox = styled.div`
     display: inline-flex;
     border: 0.05rem solid black;
     border-radius: 1rem;
-    margin: 0rem 0.5rem 0rem 0.5rem;
+    margin: 0rem 0rem 0rem 1rem;
     overflow:hidden;
     :focus-within{
         border: 2px dashed rgba(3, 102, 214, 0.3);
@@ -55,26 +56,13 @@ const StyledSearch = styled(Search)`
 const StyledInput = styled.input`
     border: none;
     outline: none;
-    width: 11.4rem;
+    width: 16rem;
+    line-height: 0.8rem;
 `
 
-const StyledNew = styled.button`
-    background-color: #191970;
-    color: white;
-    margin-left: 3.5rem;
+const StyledNew = styled.span`
+    margin-left: 10.5rem;
     min-width: 2.5rem;
-    :disabled{
-        opacity: 0.5;
-      }
-
-    border: solid 2px transparent;
-    border-radius: 0.4em; 
-
-    &:hover {
-        color: #191970;
-        border-color: currentColor;
-        background-color: white;
-      }
 `
 
 const TableRowContainer = styled.div`
@@ -170,9 +158,9 @@ const Table = () => {
                     <SearchBox>
                         <StyledSearch /><StyledInput type="text" placeholder ="Search..." value={search} onChange={handleSearch}/>
                     </SearchBox>
-                   
-                        <StyledNew onClick={()=>createRow()} disabled={taskList[0] && taskList[0].task === ''} onMouseEnter={onHover} onMouseLeave={onLeave}>New</StyledNew>
-                  
+                    <StyledNew>
+                        <StyledButton color='#191970' onClick={()=>createRow()} disabled={taskList[0] && taskList[0].task === ''} onMouseEnter={onHover} onMouseLeave={onLeave}>New</StyledButton>
+                    </StyledNew>
                 </SearchContainer>
                 
                 <TableRowContainer> 

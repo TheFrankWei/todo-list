@@ -9,39 +9,36 @@ import {
   } from './tableSlice';
 import { useDispatch } from 'react-redux';
 
+
+import StyledButton from '../button/button';
+
 const StyledRow = styled.div`
     border-top: 1px solid black;
     padding: 1rem 0rem 1rem 3.5rem;
-
+    
 `
-const StyledTask = styled.div`
-    display: inline-block;
-    margin-left: 0.5rem;
 
+const StyledForm = styled.form`
+    display: flex;
+`
+
+const StyledInput = styled.input`
+  width: 24rem;
+`
+
+const StyledTask = styled.div`
+    display: inline-flex;
+    margin-left: 0.5rem;
+    overflow: hidden;
+    flex-grow: 2;
 `
 const ButtonContainer = styled.div`
-    display:inline-block;
+    display: inline-flex;
     float: right;
-    margin-right: 0.5rem;
+    margin-right: 0.8rem;
 `
 
-const StyledSave = styled.button`
-    background-color: black;
-    color: white;
-    &:hover {
-        color: #2E8B57;
-        border-color: currentColor;
-        background-color: transparent;
-    }
-    :disabled{
-        opacity: 0.5;
-      }
-
-    border: solid 2px transparent;
-    border-radius: 0.4em; 
-`
-
-const StyledButton = styled.button`
+const IconButton = styled.button`
     background-color: transparent;
     border: none;
 `
@@ -104,10 +101,11 @@ const TableRow = (props) => {
     return(
         <StyledRow onDragStart={props.onDragStart} onDragEnter={props.onDragEnter} draggable={props.draggable}>
             <Circle/>
-            <form>
+            
+            <StyledForm>
+                <StyledTask>
                 {toggleEdit?(
-                    <StyledTask>
-                        <input 
+                        <StyledInput 
                             ref={inputRef}
                             type="text"
                             name="task"
@@ -116,23 +114,19 @@ const TableRow = (props) => {
                             disabled={props.isDisabled}
                             autocomplete="off"
                             />
-                    </StyledTask>
-                ):(
-                    <StyledTask>
-                        {taskInput}
-                    </StyledTask>
-                )}
-            
-                    <ButtonContainer>
-                        {toggleEdit? (<StyledSave onClick={handleEdit} disabled={(taskInput.length<1 || taskInput.length>25)}>Save</StyledSave>
-                            ):(
+                ):( taskInput )}
+                </StyledTask>
+
+                <ButtonContainer>
+                    {toggleEdit? (<StyledButton color='#000000' hoverColor='#2E8B57' onClick={handleEdit} disabled={(taskInput.length<1 || taskInput.length>25)}>Save</StyledButton>
+                        ):(
                             <span>
-                                <StyledButton onClick={()=>setEdit(!toggleEdit)} ><StyledEdit/></StyledButton>
-                                <StyledButton onClick={handleDelete} ><StyledTrash/></StyledButton>
+                                <IconButton onClick={()=>setEdit(!toggleEdit)} ><StyledEdit/></IconButton>
+                                <IconButton onClick={handleDelete} ><StyledTrash/></IconButton>
                             </span>
-                            )}
-                    </ButtonContainer>
-          </form>
+                        )}
+                </ButtonContainer>
+          </StyledForm>
         </StyledRow>
     )
 

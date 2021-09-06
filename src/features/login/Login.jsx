@@ -11,6 +11,7 @@ import {
     setAuth
   } from '../user/userSlice';
 
+import StyledButton from '../button/button';
 
 const LoginContainer = styled.div`
   display: grid;
@@ -60,7 +61,6 @@ const InputContainer = styled.div`
     input:not(:focus):not(:placeholder-shown):valid {
       border: 2px solid #2E8B57;
     }
-    
 `
 
 const StyledInput = styled.input`
@@ -80,23 +80,9 @@ const StyledLock = styled(LockAlt)`
     display: inline;
 `
 
-const LoginButton = styled.button`
-    margin-top: 1rem;
-    background-color: #191970;
-    color: white;
-    border: solid 2px transparent;
-    border-radius: 0.4em;  
-    display: inline-block;
+const StyledLogin = styled.div`
+    margin-top: 2rem;
     width: 100%;
-
-    &:hover:not(:disabled) {
-      color: #191970;
-      border-color: currentColor;
-      background-color: white;
-    }
-    :disabled{
-      opacity: 0.5;
-    }
 `
 
 const Login = () => {
@@ -161,8 +147,9 @@ const Login = () => {
         <StyledInput placeholder='Must be at least 4 characters' value={password} onChange={e => setPassword(e.target.value)} onBlur={(e)=>checkValidity('password')} required pattern=".{4,16}"  title="Password must be 4-16 characters."/>
         </InputContainer>
         <Error>{passwordValidity === false? 'Password must be 4-16 characters' : null}</Error>
-
-        <LoginButton type="submit" disabled={(!passwordValidity && !usernameValidity) || isPending === 'loading'}>{isPending==='loading'? '...' : 'login'}</LoginButton>
+        <StyledLogin>
+          <StyledButton color="#191970" type="submit" disabled={(!passwordValidity && !usernameValidity) || isPending === 'loading'}>{isPending==='loading'? '...' : 'login'}</StyledButton>
+        </StyledLogin>
         <Error>{httpErr? `Error ${httpErr}` : null}</Error>
         </form>
     </LoginContainer>
