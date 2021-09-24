@@ -106,11 +106,13 @@ const Login = () => {
 
   const handleLogin = (e) => {
       e.preventDefault();
-        dispatch(fetchAsync({'email':username, 'password': password})).then(()=>{
-            if(isAuthenticated){
-                history.push('/home');
-            }
-        });
+        // dispatch(fetchAsync({'email':username, 'password': password})).then(()=>{
+        //     if(isAuthenticated){
+        //         history.push('/home');
+        //     }
+        // });
+        localStorage.setItem('isAuth', true);
+        history.push('/home');
   }
 
   const checkValidity = (type) => {
@@ -130,7 +132,7 @@ const Login = () => {
   return(
     <LoginContainer>
         
-      <Title>Rapptr Labs</Title>
+      <Title>To-do List</Title>
       <form onSubmit={handleLogin}>
 
       <Label>Email</Label>
