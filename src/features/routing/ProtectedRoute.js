@@ -6,7 +6,7 @@ function ProtectedRoute({ isAuth, component: Component, ...rest}){
                 if(isAuth){
                     return <Component />;
                 } else {
-                    return <Redirect to={{pathname: '/login', state:{from: props.location}}}/>;
+                    return <Redirect to={{pathname: '/todo-list/login', state:{from: props.location}}}/>;
                 }
     }}/>;
 }

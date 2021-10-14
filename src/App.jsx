@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from '@emotion/styled';
 import  Table  from './features/table/Table';
 import { useDispatch } from 'react-redux';
@@ -38,6 +38,16 @@ const StyledLogout = styled.div`
 
 const App = () => {
   const dispatch = useDispatch();
+  const [innerWindow, setWindow] = useState({width: 0, height: 0});
+
+    useEffect(()=>{
+      window.addEventListener('resize', updateWindowDimensions)
+    },[])
+
+    let updateWindowDimensions = () => {
+      setWindow({width: window.innerWidth, height: window.innerHeight})
+    }
+
 
   const handleLogout = (e) => {
     e.preventDefault();
