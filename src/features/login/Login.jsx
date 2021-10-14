@@ -112,7 +112,7 @@ const Login = () => {
         //     }
         // });
         localStorage.setItem('isAuth', true);
-        history.push('/home');
+        history.push('/todo-list');
   }
 
   const checkValidity = (type) => {
@@ -138,7 +138,7 @@ const Login = () => {
       <Label>Email</Label>
         <InputContainer>
             <StyledUser/>
-            <StyledInput type='email' placeholder='user@rapptrlabs.com' value={username} onChange={e => setUsername(e.target.value)} onBlur={(e)=>checkValidity('username')}required pattern=".{1,50}" />
+            <StyledInput type='email' placeholder='any _@_.com! PoC for Auth' value={username} onChange={e => setUsername(e.target.value)} onBlur={(e)=>checkValidity('username')}required pattern=".{1,50}" />
         </InputContainer>
 
           <Error>{usernameValidity === false? 'Not a valid email' : null}</Error>

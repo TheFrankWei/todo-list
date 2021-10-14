@@ -12,9 +12,9 @@ const AppRouter = () => {
     return(
         <BrowserRouter>
             <Route path='/login'><Login/></Route> 
-            <ProtectedRoute path='/home' component={App} isAuth={isAuthenticated}/>
+            <ProtectedRoute path='/todo-list' component={App} isAuth={isAuthenticated}/>
 
-            {isAuthenticated ?(<Redirect to='/home'/>): (<Redirect to='/login'/>)}
+            {isAuthenticated ?(<Redirect to='/todo-list'/>): (<Redirect to='/login'/>)}
             
         </BrowserRouter>
       
